@@ -1,0 +1,50 @@
+<h1 mat-dialog-title class="text-nowrap">Employee Action :: <strong>{{action}}</strong></h1>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="form" *ngIf="action != 'Delete'; else elseTemplate" class="w-100">
+    <mat-form-field>
+      <input formControlName="first_name" placeholder="First name" matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <input formControlName="last_name" placeholder="Last name" matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <input formControlName="email" placeholder="Email" matInput>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Choose a birthdate</mat-label>
+      <input formControlName="dob" matInput (click)="picker.open()" [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input formControlName="phone_number" placeholder="Phone number" matInput>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Offices</mat-label>
+      <mat-select formControlName="office">
+        <mat-option value="tallinn">Tallinn</mat-option>
+        <mat-option value="riga">Riga</mat-option>
+        <mat-option value="vilnus">Vilnus</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Tags</mat-label>
+      <mat-chip-list #tagList aria-label="Employee tags" multiple>
+        <mat-chip *ngFor="let tag  of tags" [selected]="tag" [value]="tag" (removed)="removeTag(tag)">
+          {{tag}}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input placeholder="New tag..." [matChipInputFor]="tagList" (matChipInputTokenEnd)="addTagFromInput($event)">
+      </mat-chip-list>
+    </mat-form-field>
+  </form>
+  <ng-template #elseTemplate>
+    Are you sure you want to delete <b>{{local_data.first_name}} {{local_data.last_name}}</b>?
+  </ng-template>
+</mat-dialog-content>
+<mat-dialog-actions class="justify-content-between">
+  <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+  <button mat-button (click)="doAction()" mat-flat-button color="primary">{{action}}</button>
+</mat-dialog-actions>

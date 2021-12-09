@@ -1,0 +1,80 @@
+<div class="d-flex justify-content-between align-items-center">
+  <h1 class="m-0">Employees</h1>
+  <button mat-button (click)="openDialog('Add', {})" mat-flat-button color="primary">Add New Employee</button>
+</div>
+<div class="shadow mt-3">
+  <table mat-table [dataSource]="EmpData">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>Emp Id </th>
+      <td mat-cell *matCellDef="let emp"> {{emp.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="first_name">
+      <th mat-header-cell *matHeaderCellDef>First Name</th>
+      <td mat-cell *matCellDef="let emp"> {{emp.first_name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="last_name">
+      <th mat-header-cell *matHeaderCellDef>Last Name</th>
+      <td mat-cell *matCellDef="let emp"> {{emp.last_name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let emp"> {{emp.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="office">
+      <th mat-header-cell *matHeaderCellDef>Office</th>
+      <td mat-cell *matCellDef="let emp"> {{emp.office | titlecase}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="phone_number">
+      <th mat-header-cell *matHeaderCellDef>Phone Number</th>
+      <td mat-cell *matCellDef="let emp"> {{emp.phone_number}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dob">
+      <th mat-header-cell *matHeaderCellDef>Birthday</th>
+      <td mat-cell *matCellDef="let emp"> {{emp.dob | date:'shortDate'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="tags">
+      <th mat-header-cell *matHeaderCellDef>Tags</th>
+      <td mat-cell *matCellDef="let emp">
+        <mat-chip-list aria-label="Employee tags" multiple>
+          <mat-chip *ngFor="let tag of emp.tags">
+            {{tag}}
+          </mat-chip>
+        </mat-chip-list>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+      <td mat-cell *matCellDef="let emp">
+        <button mat-icon-button [matMenuTriggerFor]="employeeMenu" aria-label="">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #employeeMenu="matMenu">
+          <button mat-menu-item (click)="openDialog('Update', emp)">
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+          <button mat-menu-item (click)="openDialog('Delete', emp)">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let emprow; columns: displayedColumns;"></tr>
+  </table>
+  <div *ngIf="EmpData.length === 0" class="p-5 m-5 text-center">
+    <mat-icon class="icon-lg">table_chart</mat-icon>
+    <h1 class="mt-5">
+      No records found
+    </h1>
+  </div>
+</div>
