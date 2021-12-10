@@ -12,7 +12,8 @@ Package Manager: npm 8.2.0
 ```
 ## Installation
 ```
-git checkout git@github.com:jshupilov/enlabs-fe.git
+git init
+git clone git@github.com:jshupilov/enlabs-fe.git
 npm install
 ```
 
