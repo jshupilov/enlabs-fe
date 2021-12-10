@@ -88,6 +88,12 @@ export class HomeComponent implements OnInit {
         }
         return emp;
       });
+      this.snackBar.open('Employee updated succesfully', null, {
+        horizontalPosition: 'end',
+        verticalPosition: 'top',
+        duration: 3000,
+        panelClass: 'bg-success'
+      });
     }, error => {
       this.snackBar.open('Sorry something goes wrong', null, {
         horizontalPosition: 'end',
@@ -102,6 +108,19 @@ export class HomeComponent implements OnInit {
       if (response) {
         this.EmpData = this.EmpData.filter((value, key) => {
           return value.id != row_obj.id;
+        });
+        this.snackBar.open('Employee deleted succesfully', null, {
+          horizontalPosition: 'end',
+          verticalPosition: 'top',
+          duration: 3000,
+          panelClass: 'bg-success'
+        });
+      } else {
+        this.snackBar.open('Sorry something goes wrong', null, {
+          horizontalPosition: 'end',
+          verticalPosition: 'top',
+          duration: 3000,
+          panelClass: 'bg-danger'
         });
       }
     }, error => {
